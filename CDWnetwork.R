@@ -30,14 +30,14 @@ length(cdw$Link) # 669 edges in total
 
 #' @title Create 3-Dimensional Network Plot of CDW data views and tables
 #' @param df dataframe with two columns, each containing nodes, where the relationship between column 1 and column 2 is from node1 to node2
-#' @param slice selected CDW domain 
+#' @param slice selected CDW domain as a string. Internally passed to a grep call (case sensitive)
 CDW3DNetwork <- function(df, slice) {
   require(igraph)
   require(rgl)
-  g <- df[df[, 1] == slice, ]
+  g <- df[grep(slice, df[[1]]), ]
   g <- graph_from_data_frame(g)
   coords <- layout_with_fr(g, dim = 3)
-  rglplot(g, layout = coords, color = "lightgray")
+  rglplot(g, layout = coords, vertex.color = "green", edge.color = "red")
 }
 
 #============================= End of Document  ==============================#
